@@ -5,15 +5,18 @@
 }
 
 .header2 {
-    padding: .5px;
+    padding: 10px;
     background-color:#f8f8f8;
-    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
     border-color: #f1f1f1;
 }
 
 .box {
     border-color: #f1f1f1;
     border-style: solid;
+    padding: 20px;
 }
 
 h1 {color: white;
