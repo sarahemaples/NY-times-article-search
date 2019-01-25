@@ -15,29 +15,45 @@
         <h1><i class="fa fa-newspaper-o" aria-hidden="true"> </i>New York Times Search</h1>
     </div>
 
+    <br><br><br>
+
+    
     <div id = "searchpara">
-        <h2>
+        <div class = "box">
+        <div class = "header2"><h2>
             <i class="fa fa-list-alt" aria-hidden="true"></i> Search Parameters
         </h2>
+        </div>
         <form>
             Search Terms:<br>
-                <input type="text" name="searchterms">
+                <input type="text" class="text" name="searchterms">
                     <br><br>
              Number of Records to Retrieve:<br>
-                <input type="text" name="recordnumber">
+                <input type="text" class="text"name="recordnumber">
                 <br><br>
             Start Year (optional):<br>
-                <input type="text" name="startyear">
+                <input type="text" class="text" name="startyear">
                 <br><br>
              End Year (optional):<br>
-                <input type="text" name="endyear">
+                <input type="text"class="text"  name="endyear">
                 <br><br>
             <button class = "Search"><i class="fa fa-search" aria-hidden="true"></i> Search</button> <button class = "Clear"><i class="fa fa-trash" aria-hidden="true"></i> Clear Results</button>
         </form>
-        
+      </div>  
     </div>
+
+    <br><br>
+
     <div id = "toparticle">
-        <h2>Top Articles</h2>
+        <div class = "box">
+        <div class = "header2">
+        <h2>Top Articles</h2></div>
+
+        <span id = "results">
+            <br><br>
+
+        </span>
+        </div>
     </div>
 </body>
 </html>
