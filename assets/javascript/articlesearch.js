@@ -1,11 +1,45 @@
 $(document).ready(function(){
+    
+var numResults = 5;
+
     $("#search").on("click", function(e){
         e.preventDefault();
     // take in all info from form and save it in variables
         // console.log("clicked");
-        var keyWords = $("input[name=searchterms]").val();
+        var keyWords = $("input[name=searchterms]").val().trim();
+        var recordsToRetrieve = $("input[name=recordnumber]").val().trim();
+        var startYear = $("input[name=startyear]").val().trim();
+        console.log(startYear);
+        var endYear = $("input[name=endyear]").val().trim();
         // console.log(keyWords);
-        var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q="+keyWords+"&api-key=ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky";
+
+        var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+
+        var queryParams = {"api-key": "ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky"};
+
+        // console.log(queryURL);
+
+        // adding search term to url
+        queryParams.q = keyWords;
+
+        // query params
+
+        // start year
+        if (startYear != ""){
+            queryParams.begin_date = startYear + "0101";
+        };
+
+        // end year
+        if (endYear != ""){
+            queryParams.end_date = endYear + "1231";
+        }
+
+        // grabbing # records 
+        if (recordsToRetrieve != ""){
+            numResults = parseInt(recordsToRetrieve);
+        }
+
+        queryURL = queryURL + $.param(queryParams);
 
         $.ajax({
             url: queryURL,
@@ -14,15 +48,11 @@ $(document).ready(function(){
             .then(function(response) {
                 console.log(response.response.docs[0]);
                 console.log(response.response.docs);
-    // ----------------write a function below------------------ //
-                displayArticles(response.response.docs, 5);
+
+
+                displayArticles(response.response.docs, numResults);
             })
     });
-
-    // $(".Clear").on("click", function(e){
-    //     e.preventDefault();
-    //     console.log("fuck you cole");
-    // });  
     
 //---------------------------------------------------//
 // FUNCTION THAT DISPLAYS ARTICLES ON SCREEN
@@ -63,7 +93,7 @@ $(document).ready(function(){
             // add link to article
             if (arr[a].web_url){
                 var webLink = "<a href = '" + arr[a].web_url + "'>" + arr[a].web_url + "</a>";
-                console.log(webLink);
+                // console.log(webLink);
                 newArt.append(webLink);
             }
 
