@@ -3,16 +3,16 @@ $(document).ready(function(){
         e.preventDefault();
     // take in all info from form and save it in variables
         console.log("clicked");
-        var keyWords = $("input[name=searchterms]");
+        var keyWords = $("input[name=searchterms]").val();
         console.log(keyWords);
-        var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=ef5156c9-019d-4e7f-9dc4-65a17d39f9af";
+        var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q="+keyWords+"&api-key=ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky";
 
         $.ajax({
             url: queryURL,
             method: "GET"
         })
             .then(function(response) {
-                console.log(response);
+                console.log(response.response.docs);
             })
     });
 
