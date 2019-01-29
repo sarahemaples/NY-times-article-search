@@ -47,6 +47,8 @@ $(document).ready(function(){
             newArt.append(headline);
 
             // add author
+            var author = "<h5>" + arr[a].byline.original + "</h5><br>";
+            newArt.append(author);
 
             // add date/time
 
