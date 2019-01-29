@@ -43,16 +43,29 @@ $(document).ready(function(){
             var newArt = $("<li>");
 
             // add headline
-            var headline = "<h2>" + arr[a].headline.main + "</h2><br>";
-            newArt.append(headline);
+            if (arr[a].headline.main){
+                var headline = "<h2>" + arr[a].headline.main + "</h2><br>";
+                newArt.append(headline);
+            }
+
+            // add date and time
+            if (arr[a].pub_date){
+                var dateTime = "<h6>" + arr[a].pub_date + "</h6><br>";
+                newArt.append(dateTime);
+            }
 
             // add author
-            var author = "<h5>" + arr[a].byline.original + "</h5><br>";
-            newArt.append(author);
-
-            // add date/time
+            if (arr[a].byline.original){
+                var author = "<h5>" + arr[a].byline.original + "</h5><br>";
+                newArt.append(author);
+            }
 
             // add link to article
+            if (arr[a].web_url){
+                var webLink = "<a href = '" + arr[a].web_url + "'>" + arr[a].web_url + "</a>";
+                console.log(webLink);
+                newArt.append(webLink);
+            }
 
             // add list item to list
             articleList.append(newArt);
