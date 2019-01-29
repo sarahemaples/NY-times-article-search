@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("#search").on("click", function(e){
         e.preventDefault();
     // take in all info from form and save it in variables
-        console.log("clicked");
+        // console.log("clicked");
         var keyWords = $("input[name=searchterms]").val();
         // console.log(keyWords);
         var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q="+keyWords+"&api-key=ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky";
@@ -15,7 +15,7 @@ $(document).ready(function(){
                 console.log(response.response.docs[0]);
                 console.log(response.response.docs);
     // ----------------write a function below------------------ //
-                displayArticles(response.response.docs, 1);
+                displayArticles(response.response.docs, 5);
             })
     });
 
@@ -32,9 +32,9 @@ $(document).ready(function(){
 // n is the number of articles user wishes to display. default is 10
     function displayArticles(arr, n){
         // clear any previously displayed articles
-
+        $("#results").empty();
         // create new list and append it to our 'results' div (span?)
-        var articleList = $("<ul>");
+        var articleList = $("<ol>");
         $("#results").append(articleList);
 
         // for loop through the response.data array
