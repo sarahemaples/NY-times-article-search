@@ -1,29 +1,56 @@
-$(document).ready(function(){
-    
-var numResults = 5;
+// Define Variables
+var numResults = 1; 
+let numPages, pageNumber;
 
-    $("#search").on("click", function(e){
-        e.preventDefault();
-    // take in all info from form and save it in variables
-        // console.log("clicked");
+
+$(document).ready(function(){
+    // Set the API key
+    queryParams = {"api-key": "ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky"};
+
+    $("#search").on("click", function(search){
+        search.preventDefault();
+        if (numResults >= 11){
+            numPages = Math.ceil(numResults / 10);
+            console.log(numPages + " pages needed.");
+            pageNumber = numPages - numPages;
+            console.log("Page number is currently " + pageNumber);
+            queryParams.page = pageNumber;
+        }
+        queryRequest();
+    });
+
+    $("#prev").on("click", function(prevPage) {
+        prevPage.preventDefault();
+        if (pageNumber > 0) {
+            pageNumber--;
+            queryParams.page = pageNumber;
+            queryRequest();
+        }
+    });
+
+    $("#next").on("click", function(nextPage) {
+        nextPage.preventDefault();
+        if (pageNumber < (numPages - 1)) {
+            pageNumber++;
+            queryParams.page = pageNumber;
+            queryRequest();
+        }
+    });
+/*-------------------------------------------
+        NYTimes Search API Query Function
+--------------------------------------------*/
+    function queryRequest() {
         var keyWords = $("input[name=searchterms]").val().trim();
         var recordsToRetrieve = $("input[name=recordnumber]").val().trim();
         var startYear = $("input[name=startyear]").val().trim();
-        console.log(startYear);
+        // console.log(startYear);
         var endYear = $("input[name=endyear]").val().trim();
-        // console.log(keyWords);
-
+        // Set the NYTimes artcle search URL
         var queryURL =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
 
-        var queryParams = {"api-key": "ZV6Pg8ej8AANKrKAXnwu4ciANpJdCPky"};
-
-        // console.log(queryURL);
-
-        // adding search term to url
         queryParams.q = keyWords;
 
         // query params
-
         // start year
         if (startYear != ""){
             queryParams.begin_date = startYear + "0101";
@@ -39,8 +66,18 @@ var numResults = 5;
             numResults = parseInt(recordsToRetrieve);
         }
 
-        queryURL = queryURL + $.param(queryParams);
+        if (numResults >= 10){
+            numResults / 10;
+            console.log("numResults remainder = " + numResults);
+        }
+        
+        if (pageNumber != ""){
+            queryParams.page = pageNumber;
+        }
 
+        queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL);
+        console.log(pageNumber);
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -48,18 +85,19 @@ var numResults = 5;
             .then(function(response) {
                 console.log(response.response.docs[0]);
                 console.log(response.response.docs);
+                console.log(response.response.offset);
 
 
                 displayArticles(response.response.docs, numResults);
             })
-    });
+    }
     
-//---------------------------------------------------//
-// FUNCTION THAT DISPLAYS ARTICLES ON SCREEN
-//---------------------------------------------------//
-// this function takes in two parameters (arr, n)
-// arr is the array of articles returned
-// n is the number of articles user wishes to display. default is 10
+/*---------------------------------------------------
+ FUNCTION THAT DISPLAYS ARTICLES ON SCREEN
+---------------------------------------------------*/
+/* this function takes in two parameters (arr, n)
+arr is the array of articles returned n is the number of articles
+user wishes to display. default is 10 */
     function displayArticles(arr, n){
         // clear any previously displayed articles
         $("#results").empty();
